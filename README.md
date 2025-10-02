@@ -2,9 +2,9 @@
 
 ---
 
-# btw
+# purelate
 
-[btw](https://btw.so) is an open source personal website builder.
+purelate is a fork of [btw](https://btw.so) an open source personal website builder.
 
 You can [sign up](https://btw.so) and use btw without installing anything. You can also use the open source version to self-host.
 

@@ -575,7 +575,7 @@ async function setUserDetails({
             if (slug != process.env.ADMIN_SLUG) {
                 return {
                     success: false,
-                    error: "Can't change slug in this instance. Sign up for an account on app.btw.so",
+                    error: `Can't change slug in this instance. Sign up for an account on app.${process.env.ROOT_DOMAIN || 'btw.so'}`,
                 };
             }
         }

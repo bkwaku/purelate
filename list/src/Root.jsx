@@ -26,6 +26,7 @@ import PublicNote from "./routes/PublicNote";
 import PublicList from "./routes/PublicList";
 import FourThousandWeeks from "./routes/FourThousandWeeks";
 import Intelligence from "./routes/Intelligence";
+import { getUserDomain, getBasePublicUrl } from './utils/domain';
 
 function Root() {
   const dispatch = useDispatch();
@@ -35,12 +36,17 @@ function Root() {
   const { user } = userState;
   const { isLoggedIn } = user;
 
+  // In development always use localhost for userDomain to avoid *.btw.so
   const userDomain =
-    ((user.data || {}).domains || []).length > 0
+    process.env.NODE_ENV === "development"
+      ? "localhost"
+      : ((user.data || {}).domains || []).length > 0
       ? user.data.domains[0].domain
       : (user.data || {}).slug
       ? `${(user.data || {}).slug}.btw.so`
       : null;
+
+  const basePublicUrl = getBasePublicUrl(user);
 
   useEffect(() => {
     // get user details if it is the first time
@@ -99,6 +105,9 @@ function Root() {
             href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet"
           />
+          {basePublicUrl && (
+            <meta property="og:url" content={basePublicUrl} />
+          )}
         </Helmet>
 
         {/* {isLoggedIn && <Login />} */}

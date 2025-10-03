@@ -7,6 +7,7 @@ import useInterval from "beautiful-react-hooks/useInterval";
 import { useDispatch } from "react-redux";
 import { STATUS } from "../literals";
 import { useNavigate } from "react-router-dom";
+import { getProtocol } from "../utils/domain";
 import {
   getNotes,
   createNewNote,
@@ -76,6 +77,7 @@ function Dash(props) {
   }, [changed("makeNotePrivate.status")]);
 
   const userDomain = props.domain;
+  const protocol = getProtocol(); // Always HTTPS in production
   const [showEditUrl, setShowEditUrl] = useState(false);
   const editUrlRef = useRef(null);
   const [currentUrl, setCurrentUrl] = useState(selectedNote?.slug || "");
@@ -125,7 +127,7 @@ function Dash(props) {
                       <span
                         onClick={() => {
                           window.open(
-                            `https://${userDomain}/${currentUrl}`,
+                            `${protocol}://${userDomain}/${currentUrl}`,
                             "_blank"
                           );
                         }}
@@ -133,10 +135,10 @@ function Dash(props) {
                           showEditUrl ? "hidden" : ""
                         } cursor-pointer border-dotted border-b-2 border-black text-ellipsis overflow-hidden`}
                       >
-                        {`https://${userDomain}/${currentUrl}`}
+                        {`${protocol}://${userDomain}/${currentUrl}`}
                       </span>
                       <span className={`${showEditUrl ? "" : "hidden"}`}>
-                        {`https://${userDomain}/`}
+                        {`${protocol}://${userDomain}/`}
                       </span>{" "}
                       <input
                         ref={editUrlRef}

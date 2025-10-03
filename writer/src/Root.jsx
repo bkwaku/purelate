@@ -11,6 +11,7 @@ import {
 import { selectUser } from "selectors";
 import useTreeChanges from "tree-changes-hook";
 import { useAppSelector } from "modules/hooks";
+import { getUserDomain } from './utils/domain';
 
 import toast, { Toaster } from "react-hot-toast";
 
@@ -32,12 +33,7 @@ function Root() {
   const { user } = userState;
   const { isLoggedIn } = user;
 
-  const userDomain =
-    ((user.data || {}).domains || []).length > 0
-      ? user.data.domains[0].domain
-      : (user.data || {}).slug
-      ? `${(user.data || {}).slug}.btw.so`
-      : null;
+  const userDomain = getUserDomain(user);
 
   useEffect(() => {
     // get user details if it is the first time

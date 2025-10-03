@@ -156,7 +156,9 @@ function SettingsContainer(props) {
               Slug
             </label>
             <label className="text-xs text-gray-500">
-              Your site will go live on {`${slug || "<slug>"}.btw.so`}
+              {process.env.NODE_ENV === "development"
+                ? `Your site will go live on http://localhost:9222 (slug ignored locally)`
+                : `Your site will go live on ${`${slug || "<slug>"}.btw.so`}`}
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

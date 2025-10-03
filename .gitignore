@@ -31,6 +31,7 @@ tasks/.DS_Store
 
 publisher/node_modules/
 publisher/.DS_Store
+publisher/public/stylesheets/styles_generated.css
 
 deployment/
 deployment/.DS_Store

@@ -1,6 +1,12 @@
 version: "3"
 
 services:
+    mailhog:
+        container_name: mailhog
+        image: mailhog/mailhog
+        ports:
+            - "8025:8025"
+            - "1025:1025"
     tasks:
         platform: linux/amd64
         container_name: tasks
@@ -42,11 +48,11 @@ services:
             NODE_ENV: development
             TASKS_DATABASE_URL: postgres://postgres:postgres@db:5432/btw
             PUBLISHER_SERVER_URL: publisher:9222
-            SMTP_HOST:
-            SMTP_PORT:
+            SMTP_HOST: mailhog
+            SMTP_PORT: 1025
             SMTP_USER:
             SMTP_PASS:
-            SMTP_FROM:
+            SMTP_FROM: "btw@localhost"
             TASKS_REDIS_URL: "redis://redis:6379/"
             CORS_DOMAINS: "http://localhost:9000"
             COMPANION_CLIENT_ORIGINS: "http://localhost:9000"
@@ -58,8 +64,8 @@ services:
             S3_BUCKET:
             S3_KEY:
             S3_SECRET:
-            ADMIN_EMAIL:
-            ADMIN_SLUG:
+            ADMIN_EMAIL: email@gmail.com
+            ADMIN_SLUG: admin
         links:
             - redis
     list:
@@ -165,8 +171,8 @@ services:
             HTTPS_DOMAIN: 0
             NODE_ENV: development
             SECRET_KEY: CHANGE THIS AND SET YOUR SECRET
-            ADMIN_EMAIL:
-            ADMIN_SLUG:
+            ADMIN_EMAIL: email@gmail.com
+            ADMIN_SLUG: admin
     redis:
         # platform: linux/amd64
         image: "redisfab/redis:6.2.6-arm64v8-bionic"

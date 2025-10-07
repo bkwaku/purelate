@@ -34,8 +34,8 @@ COPY . /pythagoras
 RUN export NODE_OPTIONS="--max-old-space-size=8192"
 
 # allow port 2000 to be publicly available
+ENV NODE_ENV=production
 EXPOSE 2000
 
 # run command
 CMD pm2 start pm2_docker.json && tail -f /dev/null
-

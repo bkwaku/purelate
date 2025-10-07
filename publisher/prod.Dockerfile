@@ -1,4 +1,4 @@
-FROM node:11.12.0-alpine
+FROM --platform=linux/amd64 node:16
 
 # create an app directory and use it as working directory
 RUN mkdir -p /publisher
@@ -8,34 +8,23 @@ WORKDIR /publisher
 ENV PATH /publisher/node_modules/.bin:$PATH
 
 COPY package.json /publisher/package.json
-# COPY package-lock.json /publisher/package-lock.json
-
-RUN apk add --no-cache --virtual .gyp
-
-RUN apk add --no-cache --virtual python
-
-RUN apk add --no-cache --virtual make
-
-RUN apk add --no-cache --virtual g++
-
-RUN apk add --no-cache autoconf automake
-
-RUN apk add --no-cache nasm pkgconfig libtool build-base zlib-dev
-
+COPY package.json /tmp/package.json
 RUN npm config set unsafe-perm true
-RUN npm install        
+RUN cd /tmp && npm install
 
 RUN npm install pm2@6.0.5 -g
-
 RUN npm install cross-env@latest -g
 
-COPY . /pythagoras
+COPY . /publisher
+RUN cp -a /tmp/node_modules /publisher/node_modules
 
+# Set production environment
+ENV NODE_ENV=production
 RUN export NODE_OPTIONS="--max-old-space-size=8192"
 
-# allow port 2000 to be publicly available
-EXPOSE 2000
+# allow port 9222 to be publicly available
+EXPOSE 9222
 
 # run command
-CMD pm2 start pm2_docker.json && tail -f /dev/null
+CMD pm2 start pm2-prod.json && tail -f /dev/null
 

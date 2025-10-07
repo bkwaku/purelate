@@ -35,10 +35,12 @@ RUN npm install cross-env -g
 COPY . /list
 RUN cp -a /tmp/node_modules /list/node_modules
 
-# allow port 3006 to be publicly available
-EXPOSE 9300
+# Set production environment and build the app
+ENV NODE_ENV=production
+RUN npm run build
 
-# RUN npm run build
+# allow port 9300 to be publicly available
+EXPOSE 9300
 
 # run command
 CMD pm2 start pm2-prod.json && tail -f /dev/null

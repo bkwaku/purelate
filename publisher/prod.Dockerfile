@@ -29,7 +29,7 @@ RUN npm install pm2@6.0.5 -g
 
 RUN npm install cross-env@latest -g
 
-COPY . /pythagoras
+COPY . /publisher
 
 RUN export NODE_OPTIONS="--max-old-space-size=8192"
 
@@ -38,4 +38,4 @@ ENV NODE_ENV=production
 EXPOSE 2000
 
 # run command
-CMD pm2 start pm2_docker.json && tail -f /dev/null
+CMD pm2 start pm2_prod.json && tail -f /dev/null

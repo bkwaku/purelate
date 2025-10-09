@@ -25,5 +25,5 @@ ENV NODE_ENV=production
 # allow ports to be publicly available
 EXPOSE 9210 9211 9212
 
-# run command - use production pm2 config
-CMD pm2 start pm2-prod.json && tail -f /dev/null
+# run command - use available pm2 config
+CMD pm2 start pm2_prod.json && tail -f /dev/null
